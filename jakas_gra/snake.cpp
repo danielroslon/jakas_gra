@@ -2,17 +2,17 @@
 
 
 
-snake::snake(): direction("left")
+snake::snake(Vector2u v): direction("left")
 {
 	head = new node();
-	head->element.setPosition(400,300);
+	head->element.setPosition(v.x/2, v.y/2);
 	head->prev = new node();
 	head->prev->next = head;
-	head->prev->element.setPosition(420, 300);
+	head->prev->element.setPosition(v.x / 2 + head->element.getSize().x, v.y/2);
 	head->prev->element.setFillColor(Color::Blue);
 	head->prev->prev = new node();
 	head->prev->prev->next = head->prev;
-	head->prev->prev->element.setPosition(440, 300);
+	head->prev->prev->element.setPosition(v.x / 2 + head->element.getSize().x * 2, v.y/2);
 	head->prev->prev->element.setFillColor(Color::Blue);
 	tail=head->prev->prev;
 }
@@ -41,7 +41,7 @@ void snake::zmiana_kierunku(Event *e)
 		direction = "up";
 	}
 }
-void snake::ruch()
+void snake::ruch(Vector2u v)
 {
 	node *wsk = tail;
 	while (wsk != head)
@@ -52,51 +52,48 @@ void snake::ruch()
 
 	if (direction == "right")
 	{
-		if (head->element.getPosition().x == 800 - head->element.getSize().x)
+		if (head->element.getPosition().x == v.x - head->element.getSize().x)
 		{
-			head->element.setPosition(0, this->head->element.getPosition().y);
+			head->element.setPosition(0, head->element.getPosition().y);
 		}
 		else
 		{
-			head->element.move(20, 0);
+			head->element.move(head->element.getSize().x, 0);
 		}
 	}
 	if (direction == "left")
 	{
 		if (head->element.getPosition().x == 0)
 		{
-			head->element.setPosition(800 - head->element.getSize().x, this->head->element.getPosition().y);
+			head->element.setPosition(v.x - head->element.getSize().x, head->element.getPosition().y);
 		}
 		else
 		{
-			head->element.move(-20, 0);
+			head->element.move(-head->element.getSize().x, 0);
 		}
 	}
 	if (direction == "down")
 	{
-		if (head->element.getPosition().y == 600 - head->element.getSize().y)
+		if (head->element.getPosition().y == v.y - head->element.getSize().y)
 		{
-			head->element.setPosition(this->head->element.getPosition().x, 0);
+			head->element.setPosition(head->element.getPosition().x, 0);
 		}
 		else
 		{
-			head->element.move(0, 20);
+			head->element.move(0, head->element.getSize().y);
 		}
 	}
 	if (direction == "up")
 	{
 		if (head->element.getPosition().y == 0)
 		{
-			head->element.setPosition(this->head->element.getPosition().x, 600 - head->element.getSize().y);
+			head->element.setPosition(head->element.getPosition().x, v.y - head->element.getSize().y);
 		}
 		else
 		{
-			head->element.move(0, -20);
+			head->element.move(0, -head->element.getSize().y);
 		}
 	}
-
-	
-
 }
 void snake::rysowanie(RenderWindow* w)
 {

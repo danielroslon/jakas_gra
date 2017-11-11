@@ -24,10 +24,10 @@ private:
 	node *tail;
 	std::string direction;
 public:
-	snake();
+	snake(Vector2u);
 	~snake();
 
-	void ruch();
+	void ruch(Vector2u);
 	void zmiana_kierunku(Event*);
 	void rysowanie(RenderWindow*);
 	void nowy_element();

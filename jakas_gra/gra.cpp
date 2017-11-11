@@ -2,7 +2,7 @@
 
 
 
-gra::gra(): window(VideoMode(800, 600, 32), "Gra", Style::None), s()
+gra::gra(): window(VideoMode(800, 600, 32), "Snake", Style::None), s(window.getSize())
 {
 }
 
@@ -26,7 +26,6 @@ void gra::loop()
 
 		window.clear(Color::Red);
 		Event zdarzenie;
-
 		while (window.pollEvent(zdarzenie))
 		{
 			if (zdarzenie.type == zdarzenie.KeyPressed && zdarzenie.key.code == Keyboard::Escape)
@@ -50,8 +49,7 @@ void gra::loop()
 
 			s.zmiana_kierunku(&zdarzenie);
 		}
-		//Sleep(1000);
-		s.ruch();
+		s.ruch(window.getSize());
 		s.rysowanie(&window);
 		s.wypisywanie_pozycji();
 
