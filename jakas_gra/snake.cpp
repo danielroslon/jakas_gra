@@ -2,18 +2,19 @@
 
 
 
-snake::snake(Vector2u v): kierunek('l')
+snake::snake(): direction("left")
 {
-	head = new node(v);
-	head->next = new node(v);
-	head->next->prev = head;
-	head->next->element.setPosition(420, 300);
-	head->next->element.setFillColor(Color::Blue);
-	head->next->next = new node(v);
-	head->next->next->prev = head->next;
-	head->next->next->element.setPosition(440, 300);
-	head->next->next->element.setFillColor(Color::Blue);
-	tail=head->next->next;
+	head = new node();
+	head->element.setPosition(400,300);
+	head->prev = new node();
+	head->prev->next = head;
+	head->prev->element.setPosition(420, 300);
+	head->prev->element.setFillColor(Color::Blue);
+	head->prev->prev = new node();
+	head->prev->prev->next = head->prev;
+	head->prev->prev->element.setPosition(440, 300);
+	head->prev->prev->element.setFillColor(Color::Blue);
+	tail=head->prev->prev;
 }
 
 
@@ -25,19 +26,19 @@ void snake::zmiana_kierunku(Event *e)
 {
 	if (e->type == e->KeyPressed && e->key.code == Keyboard::Right)
 	{
-		kierunek = 'p';
+		direction = "right";
 	}
 	if (e->type == e->KeyPressed && e->key.code == Keyboard::Left)
 	{
-		kierunek = 'l';
+		direction = "left";
 	}
 	if (e->type == e->KeyPressed && e->key.code == Keyboard::Down)
 	{
-		kierunek = 'd';
+		direction = "down";
 	}
 	if (e->type == e->KeyPressed && e->key.code == Keyboard::Up)
 	{
-		kierunek = 'g';
+		direction = "up";
 	}
 }
 void snake::ruch(Event *e)
@@ -45,11 +46,11 @@ void snake::ruch(Event *e)
 	node *wsk = tail;
 	while (wsk != head)
 	{
-		wsk->element.setPosition(wsk->prev->element.getPosition());
-		wsk = wsk->prev;
+		wsk->element.setPosition(wsk->next->element.getPosition());
+		wsk = wsk->next;
 	}
 
-	if (kierunek == 'p')
+	if (direction == "right")
 	{
 		if (head->element.getPosition().x == 800 - head->element.getSize().x)
 		{
@@ -60,7 +61,7 @@ void snake::ruch(Event *e)
 			head->element.move(20, 0);
 		}
 	}
-	if (kierunek == 'l')
+	if (direction == "left")
 	{
 		if (head->element.getPosition().x == 0)
 		{
@@ -71,7 +72,7 @@ void snake::ruch(Event *e)
 			head->element.move(-20, 0);
 		}
 	}
-	if (kierunek == 'd')
+	if (direction == "down")
 	{
 		if (head->element.getPosition().y == 600 - head->element.getSize().y)
 		{
@@ -82,7 +83,7 @@ void snake::ruch(Event *e)
 			head->element.move(0, 20);
 		}
 	}
-	if (kierunek == 'g')
+	if (direction == "up")
 	{
 		if (head->element.getPosition().y == 0)
 		{
@@ -103,7 +104,46 @@ void snake::rysowanie(RenderWindow* w)
 	while (wsk != NULL)
 	{
 		w->draw(wsk->element);
-		wsk = wsk->next;
+		wsk = wsk->prev;
 	}
 	
+}
+void snake::nowy_element()
+{
+	tail->prev = new node();
+	tail->prev->next = tail;
+	tail = tail->prev;
+}
+void snake::usun_element()
+{
+	node *del = tail;
+	if (head->prev->prev != del)
+	{
+		tail = tail->next;
+		tail->prev = NULL;
+		if (tail == head)
+		{
+			tail = head = NULL;
+		}
+		delete del;
+	}
+
+}
+
+//Metody kontrolne
+void snake::wypisywanie_pozycji()
+{
+	system("cls");
+	node *wsk = head;
+	int i = 0;
+	while (wsk != NULL)
+	{
+		if (i == 5)
+		{
+			break;
+		}
+		std::cout << "x: " << wsk->element.getPosition().x << "\ny: " << wsk->element.getPosition().y << std::endl << std::endl;
+		wsk = wsk->prev;
+		i++;
+	}
 }
