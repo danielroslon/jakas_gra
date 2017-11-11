@@ -51,7 +51,7 @@ void gra::loop()
 			s.zmiana_kierunku(&zdarzenie);
 		}
 		//Sleep(1000);
-		s.ruch(&zdarzenie);
+		s.ruch();
 		s.rysowanie(&window);
 		s.wypisywanie_pozycji();
 

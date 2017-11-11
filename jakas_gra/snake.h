@@ -27,7 +27,7 @@ public:
 	snake();
 	~snake();
 
-	void ruch(Event*);
+	void ruch();
 	void zmiana_kierunku(Event*);
 	void rysowanie(RenderWindow*);
 	void nowy_element();

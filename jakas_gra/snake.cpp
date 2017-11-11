@@ -41,7 +41,7 @@ void snake::zmiana_kierunku(Event *e)
 		direction = "up";
 	}
 }
-void snake::ruch(Event *e)
+void snake::ruch()
 {
 	node *wsk = tail;
 	while (wsk != head)
