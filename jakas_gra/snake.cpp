@@ -2,10 +2,18 @@
 
 
 
-snake::snake(Vector2u v): kreska(Vector2f(20,20)), kierunek('l')
+snake::snake(Vector2u v): kierunek('l')
 {
-	kreska.setPosition(0,0);
-	kreska.setFillColor(Color::Blue);
+	head = new node(v);
+	head->next = new node(v);
+	head->next->prev = head;
+	head->next->element.setPosition(420, 300);
+	head->next->element.setFillColor(Color::Blue);
+	head->next->next = new node(v);
+	head->next->next->prev = head->next;
+	head->next->next->element.setPosition(440, 300);
+	head->next->next->element.setFillColor(Color::Blue);
+	tail=head->next->next;
 }
 
 
@@ -34,48 +42,68 @@ void snake::zmiana_kierunku(Event *e)
 }
 void snake::ruch(Event *e)
 {
+	node *wsk = tail;
+	while (wsk != head)
+	{
+		wsk->element.setPosition(wsk->prev->element.getPosition());
+		wsk = wsk->prev;
+	}
+
 	if (kierunek == 'p')
 	{
-		if (kreska.getPosition().x == 800 - kreska.getSize().x)
+		if (head->element.getPosition().x == 800 - head->element.getSize().x)
 		{
-			kreska.setPosition(0, this->kreska.getPosition().y);
+			head->element.setPosition(0, this->head->element.getPosition().y);
 		}
 		else
 		{
-			kreska.move(20, 0);
+			head->element.move(20, 0);
 		}
 	}
 	if (kierunek == 'l')
 	{
-		if (kreska.getPosition().x == 0)
+		if (head->element.getPosition().x == 0)
 		{
-			kreska.setPosition(800 - kreska.getSize().x, this->kreska.getPosition().y);
+			head->element.setPosition(800 - head->element.getSize().x, this->head->element.getPosition().y);
 		}
 		else
 		{
-			kreska.move(-20, 0);
+			head->element.move(-20, 0);
 		}
 	}
 	if (kierunek == 'd')
 	{
-		if (kreska.getPosition().y == 600 - kreska.getSize().y)
+		if (head->element.getPosition().y == 600 - head->element.getSize().y)
 		{
-			kreska.setPosition(this->kreska.getPosition().x, 0);
+			head->element.setPosition(this->head->element.getPosition().x, 0);
 		}
 		else
 		{
-			kreska.move(0, 20);
+			head->element.move(0, 20);
 		}
 	}
 	if (kierunek == 'g')
 	{
-		if (kreska.getPosition().y == 0)
+		if (head->element.getPosition().y == 0)
 		{
-			kreska.setPosition(this->kreska.getPosition().x, 600 - kreska.getSize().y);
+			head->element.setPosition(this->head->element.getPosition().x, 600 - head->element.getSize().y);
 		}
 		else
 		{
-			kreska.move(0, -20);
+			head->element.move(0, -20);
 		}
 	}
+
+	
+
+}
+void snake::rysowanie(RenderWindow* w)
+{
+	node *wsk = head;
+	while (wsk != NULL)
+	{
+		w->draw(wsk->element);
+		wsk = wsk->next;
+	}
+	
 }
