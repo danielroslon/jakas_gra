@@ -4,6 +4,7 @@ using namespace sf;
 
 int main()
 {
+	srand(time(NULL));
 	gra g;
 
 	g.loop();

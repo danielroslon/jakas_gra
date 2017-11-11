@@ -126,6 +126,24 @@ void snake::usun_element()
 	}
 
 }
+void snake::zjadanie(szablon_listy<food> &a)
+{
+	szablon_listy<food>::iterator begin(a);
+	szablon_listy<food>::iterator end(a, true);
+
+	while (begin != end)
+	{
+		
+		food f = begin++;
+		if (f.getPosition() == head->element.getPosition())
+		{
+			nowy_element();
+			a.pop(f.getPosition());
+			break;
+		}
+	}
+}
+
 
 //Metody kontrolne
 void snake::wypisywanie_pozycji()

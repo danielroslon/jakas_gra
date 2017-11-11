@@ -3,6 +3,7 @@
 #include <iostream>
 #include <ctime>
 #include <string>
+#include "szablon_listy.h"
 
 using namespace sf;
 
@@ -33,7 +34,7 @@ public:
 	void rysowanie(RenderWindow*);
 	void nowy_element();
 	void usun_element();
-
+	void zjadanie(szablon_listy<food>&);
 
 	//Metody kontrolne
 	void wypisywanie_pozycji();
