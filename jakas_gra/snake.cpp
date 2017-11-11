@@ -24,19 +24,19 @@ snake::~snake()
 
 void snake::zmiana_kierunku(Event *e)
 {
-	if (e->type == e->KeyPressed && e->key.code == Keyboard::Right)
+	if (direction != "left" && e->type == e->KeyPressed && e->key.code == Keyboard::Right)
 	{
 		direction = "right";
 	}
-	if (e->type == e->KeyPressed && e->key.code == Keyboard::Left)
+	if (direction != "right" && e->type == e->KeyPressed && e->key.code == Keyboard::Left)
 	{
 		direction = "left";
 	}
-	if (e->type == e->KeyPressed && e->key.code == Keyboard::Down)
+	if (direction != "up" && e->type == e->KeyPressed && e->key.code == Keyboard::Down)
 	{
 		direction = "down";
 	}
-	if (e->type == e->KeyPressed && e->key.code == Keyboard::Up)
+	if (direction != "down" && e->type == e->KeyPressed && e->key.code == Keyboard::Up)
 	{
 		direction = "up";
 	}
