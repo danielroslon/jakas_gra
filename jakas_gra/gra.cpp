@@ -1,7 +1,6 @@
 #include "gra.h"
 
 
-
 gra::gra(): window(VideoMode(800, 600, 32), "Snake", Style::None), s(window.getSize())
 {
 }

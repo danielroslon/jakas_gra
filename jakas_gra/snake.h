@@ -11,7 +11,7 @@ struct node
 	RectangleShape element;
 	node *next;
 	node *prev;
-	node() : element(Vector2f(20, 20)), next(NULL), prev(NULL)
+	node(int _rozmiar) : element(Vector2f(_rozmiar, _rozmiar)), next(NULL), prev(NULL)
 	{
 		element.setFillColor(Color::Blue);
 	}
@@ -23,6 +23,7 @@ private:
 	node *head;
 	node *tail;
 	std::string direction;
+	int rozmiar;
 public:
 	snake(Vector2u);
 	~snake();

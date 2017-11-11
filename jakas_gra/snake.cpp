@@ -2,15 +2,15 @@
 
 
 
-snake::snake(Vector2u v): direction("left")
+snake::snake(Vector2u v): direction("left"), rozmiar(v.y/30)
 {
-	head = new node();
+	head = new node(rozmiar);
 	head->element.setPosition(v.x/2, v.y/2);
-	head->prev = new node();
+	head->prev = new node(rozmiar);
 	head->prev->next = head;
 	head->prev->element.setPosition(v.x / 2 + head->element.getSize().x, v.y/2);
 	head->prev->element.setFillColor(Color::Blue);
-	head->prev->prev = new node();
+	head->prev->prev = new node(rozmiar);
 	head->prev->prev->next = head->prev;
 	head->prev->prev->element.setPosition(v.x / 2 + head->element.getSize().x * 2, v.y/2);
 	head->prev->prev->element.setFillColor(Color::Blue);
@@ -52,7 +52,7 @@ void snake::ruch(Vector2u v)
 
 	if (direction == "right")
 	{
-		if (head->element.getPosition().x == v.x - head->element.getSize().x)
+		if (head->element.getPosition().x >= v.x - head->element.getSize().x)
 		{
 			head->element.setPosition(0, head->element.getPosition().y);
 		}
@@ -63,7 +63,7 @@ void snake::ruch(Vector2u v)
 	}
 	if (direction == "left")
 	{
-		if (head->element.getPosition().x == 0)
+		if (head->element.getPosition().x <= 0)
 		{
 			head->element.setPosition(v.x - head->element.getSize().x, head->element.getPosition().y);
 		}
@@ -74,7 +74,7 @@ void snake::ruch(Vector2u v)
 	}
 	if (direction == "down")
 	{
-		if (head->element.getPosition().y == v.y - head->element.getSize().y)
+		if (head->element.getPosition().y >= v.y - head->element.getSize().y)
 		{
 			head->element.setPosition(head->element.getPosition().x, 0);
 		}
@@ -85,7 +85,7 @@ void snake::ruch(Vector2u v)
 	}
 	if (direction == "up")
 	{
-		if (head->element.getPosition().y == 0)
+		if (head->element.getPosition().y <= 0)
 		{
 			head->element.setPosition(head->element.getPosition().x, v.y - head->element.getSize().y);
 		}
@@ -107,7 +107,7 @@ void snake::rysowanie(RenderWindow* w)
 }
 void snake::nowy_element()
 {
-	tail->prev = new node();
+	tail->prev = new node(rozmiar);
 	tail->prev->next = tail;
 	tail = tail->prev;
 }
