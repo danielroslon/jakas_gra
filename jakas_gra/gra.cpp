@@ -62,7 +62,6 @@ void gra::loop()
 		s.ruch(window.getSize());
 		jedzenie.wypisz(&window);
 		s.rysowanie(&window);
-		s.zjadanie(jedzenie);
 		s.wypisywanie_pozycji();
 
 		window.display();

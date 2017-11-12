@@ -63,7 +63,6 @@ public:
 		T t;
 		return t;
 	}
-	void pop(sf::Vector2f);
 
 	class iterator
 	{
